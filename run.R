@@ -27,10 +27,15 @@ DownloadExtractData<-function(){
     downloadData(url,dstfile)
     extractDownloadedData(dstfile)
 }
-
+DownloadExtractData()
 activitydata<-(read.csv("activity.csv",na.strings = "NA",stringsAsFactors = FALSE))
 activityavgdates<-aggregate(steps~date,activitydata,sum, na.rm = TRUE)
 ggplot(activityavgdates,aes(x=steps)) + geom_histogram() + ggtitle("Total steps per day")
+
+activitydata.splt <- split(activitydata, as.factor(activitydata$date))
+
+mean(sapply(activitydata.splt, function(x) sum(x$steps, na.rm=T)))
+median(sapply(activitydata.splt, function(x) sum(x$steps, na.rm=T)))
 mean(activityavgdates[,2])
 median(activityavgdates[,2])
 activityavginterval<-aggregate(steps~interval,activitydata,mean,na.rm=TRUE)
@@ -47,6 +52,12 @@ getavg<-function (step,inter){
 activitywithavg<-mutate(activitydata,steps = mapply(getavg,activitydata$steps,activitydata$interval))
 activityavgdates_afteravg<-aggregate(steps~date,activitywithavg,sum, na.rm = TRUE)
 ggplot(activityavgdates_afteravg,aes(x=steps)) + geom_histogram() + ggtitle("Total steps per day")
+
+activitydatawithavg.splt <- split(activitywithavg, as.factor(activitydata$date))
+
+mean(sapply(activitydatawithavg.splt, function(x) sum(x$steps, na.rm=T)))
+median(sapply(activitydatawithavg.splt, function(x) sum(x$steps, na.rm=T)))
+
 mean(activityavgdates_afteravg[,2])
 median(activityavgdates_afteravg[,2])
 
