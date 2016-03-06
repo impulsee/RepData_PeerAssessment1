@@ -146,6 +146,8 @@ median(sapply(activitydatawithavg.splt, function(x) sum(x$steps, na.rm=T)))
 ```
 ## [1] 10766.19
 ```
+We can see that our approximation of missing values increase mean from 9354 to 10766 and median from 10395 to 10766. 
+Also because in our dataset missing values are in entire day (e.g. we don't have data for entire 2012-10-01), so in new histogram all days with missing values have sum of steps equals to mean.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 First I determine is day a weekday or weekend 
@@ -154,7 +156,7 @@ First I determine is day a weekday or weekend
 activitywithavg<-mutate(activitywithavg,weekd_weekend=ifelse((wday(date)==1|wday(date)==7),"weekend","weekday"))
 ```
 
-Then aggregate average of steps over intervals and new measure,which contains description is day a weekday or weekend and creates plot on it.
+Then aggregate average of steps over intervals and new measure,which contains description is day a weekday or weekend and creates plot on it. As we can see activity in weekdays have one massive peak near 8.30AM and in weekend more even.
 
 ```r
 averagesinterval_wday_wend <- aggregate(steps ~ interval + weekd_weekend, data=activitywithavg, mean)

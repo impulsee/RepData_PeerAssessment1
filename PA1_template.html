@@ -334,6 +334,9 @@ mean(sapply(activitydatawithavg.splt, function(x) sum(x$steps, na.rm=T)))
 <pre><code>## [1] 10766.19
 </code></pre>
 
+<p>We can see that our approximation of missing values increase mean from 9354 to 10766 and median from 10395 to 10766. 
+Also because in our dataset missing values are in entire day (e.g. we don&#39;t have data for entire 2012-10-01), so in new histogram all days with missing values have sum of steps equals to mean.</p>
+
 <h2>Are there differences in activity patterns between weekdays and weekends?</h2>
 
 <p>First I determine is day a weekday or weekend </p>
@@ -341,7 +344,7 @@ mean(sapply(activitydatawithavg.splt, function(x) sum(x$steps, na.rm=T)))
 <pre><code class="r">activitywithavg&lt;-mutate(activitywithavg,weekd_weekend=ifelse((wday(date)==1|wday(date)==7),&quot;weekend&quot;,&quot;weekday&quot;))
 </code></pre>
 
-<p>Then aggregate average of steps over intervals and new measure,which contains description is day a weekday or weekend and creates plot on it.</p>
+<p>Then aggregate average of steps over intervals and new measure,which contains description is day a weekday or weekend and creates plot on it. As we can see activity in weekdays have one massive peak near 8.30AM and in weekend more even.</p>
 
 <pre><code class="r">averagesinterval_wday_wend &lt;- aggregate(steps ~ interval + weekd_weekend, data=activitywithavg, mean)
 ggplot(averagesinterval_wday_wend, aes(interval, steps)) + geom_line() + facet_grid(weekd_weekend ~ .) +
