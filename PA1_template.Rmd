@@ -53,6 +53,7 @@ activitydata.splt <- split(activitydata, as.factor(activitydata$date))
 mean(sapply(activitydata.splt, function(x) sum(x$steps, na.rm=T)))
 median(sapply(activitydata.splt, function(x) sum(x$steps, na.rm=T)))
 ```
+So mean equals to ```9354.23``` and median equals to ```10395```
 
 
 ## What is the average daily activity pattern?
@@ -108,7 +109,7 @@ First I determine is day a weekday or weekend
 activitywithavg<-mutate(activitywithavg,weekd_weekend=ifelse((wday(date)==1|wday(date)==7),"weekend","weekday"))
 ```
 
-Then aggregate average of steps over intervals and new measure,which contains description is day a weekday or weekend and creates plot on it. As we can see activity in weekdays have one massive peak near 8.30AM and in weekend more even.
+Then aggregate average of steps over intervals and new measure,which contains description is day a weekday or weekend and creates plot on it. As we can see activity in weekdays have one massive peak near 8.30AM and in weekend our graph more even.
 ```{r,echo=TRUE}
 
 averagesinterval_wday_wend <- aggregate(steps ~ interval + weekd_weekend, data=activitywithavg, mean)
